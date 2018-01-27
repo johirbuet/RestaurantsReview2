@@ -15,7 +15,7 @@ class DBHelper {
         return `http://localhost:${port}/restaurants`;
     }
 
-    static RESTAURANTS_BY_ID_URL(id) {
+    static restaurantByID(id) {
         return `http://localhost:${port}/restaurants/` + id;
     }
 
@@ -31,7 +31,7 @@ class DBHelper {
                 this.persist(restaurants);
                 callback(null, restaurants);
             } else { // Oops!. Got an error from server.
-                const error = (`Request failed. Returned status of ${xhr.status}`);
+                const error = (`Faled with status ${xhr.status}`);
                 callback(error, null);
             }
         };
@@ -75,7 +75,7 @@ class DBHelper {
 
     static fetchRestaurantByIdFromNetwork(id, callback){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', DBHelper.RESTAURANTS_BY_ID_URL(id));
+        xhr.open('GET', DBHelper.restaurantByID(id));
         xhr.onload = () => {
             if (xhr.status === 200) { // Got a success response from server!
                 const restaurant = JSON.parse(xhr.responseText);
