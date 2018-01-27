@@ -1,0 +1,43 @@
+/* Responsive */
+
+@media screen and (max-width: 700px) {
+    .filter-options h2 {
+        width: 100%;
+        padding: 3% 0;
+    }
+
+    .filter-options {
+        flex-wrap: wrap;
+    }
+
+    .inside #footer {
+        width: 100%;
+    }
+    .inside #map-container {
+        height: 40vh;
+        background: initial;
+        position: initial;
+        padding: 130px 0 0;
+        width: 100vw;
+    }
+    #breadcrumb {
+        width: 100%;
+        padding: 10px 20px 16px;
+    }
+    #restaurant-container, #reviews-container {
+        display:  flex;
+        padding: 30px 0px 0px 0px;
+        width: 100%;
+        justify-content:  center;
+    }
+    #restaurants-list li {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    nav h1 {
+        margin: auto;
+        padding: 10px 0px
+    }
+}
