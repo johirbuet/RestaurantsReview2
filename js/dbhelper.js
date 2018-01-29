@@ -15,7 +15,7 @@ class DBHelper {
         return `http://localhost:${port}/restaurants`;
     }
 
-    static restaurantByID(id) {
+    static RESTAURANTS_BY_ID_URL(id) {
         return `http://localhost:${port}/restaurants/` + id;
     }
 
@@ -31,7 +31,7 @@ class DBHelper {
                 this.persist(restaurants);
                 callback(null, restaurants);
             } else { // Oops!. Got an error from server.
-                const error = (`Faled with status ${xhr.status}`);
+                const error = (`Request failed. Returned status of ${xhr.status}`);
                 callback(error, null);
             }
         };
@@ -75,7 +75,7 @@ class DBHelper {
 
     static fetchRestaurantByIdFromNetwork(id, callback){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', DBHelper.restaurantByID(id));
+        xhr.open('GET', DBHelper.RESTAURANTS_BY_ID_URL(id));
         xhr.onload = () => {
             if (xhr.status === 200) { // Got a success response from server!
                 const restaurant = JSON.parse(xhr.responseText);
@@ -199,7 +199,7 @@ class DBHelper {
      * Restaurant image URL.
      */
     static imageUrlForRestaurant(restaurant) {
-        if (restaurant.photograph === undefined) return `/img/notfound.webp`;
+        if (restaurant.photograph === undefined) return `/img/no-image.webp`;
         return (`/img/${restaurant.photograph}.webp`);
     }
 

@@ -8,7 +8,6 @@ var markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-
     DBHelper.openDb((opened) => {
     fetchNeighborhoods();
 fetchCuisines();
@@ -17,7 +16,6 @@ DBHelper.fetchRestaurantsFromNetwork(() => {
 });
 
 });
-    registerServiceWorker();
 
 });
 
@@ -35,9 +33,6 @@ fetchNeighborhoods = () => {
 });
 }
 
-registerServiceWorker = () => {
-    navigator.serviceWorker.register('/ServiceWorker.js');
-};
 /**
  * Set neighborhoods HTML.
  */
@@ -153,33 +148,36 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
     const li = document.createElement('li');
+    let article = document.createElement('article');
+    article.tabIndex = 0;
+    li.append(article);
 
     const image = document.createElement('img');
     image.className = 'restaurant-img';
     image.src = DBHelper.imageUrlForRestaurant(restaurant);
-    image.alt = "Restaurant image: " + restaurant.name;
-    li.append(image);
+    image.alt = "Photograph of restaurant " + restaurant.name;
+    article.append(image);
 
-    const name = document.createElement('h1');
+    const name = document.createElement('h2');
     name.innerHTML = restaurant.name;
-    li.append(name);
+    article.append(name);
 
     const neighborhood = document.createElement('p');
     neighborhood.innerHTML = restaurant.neighborhood;
-    li.append(neighborhood);
+    article.append(neighborhood);
 
     const address = document.createElement('p');
     address.innerHTML = restaurant.address;
-    li.append(address);
+    article.append(address);
 
     const more = document.createElement('a');
     more.innerHTML = 'View Details';
     more.href = DBHelper.urlForRestaurant(restaurant);
+    more.setAttribute("aria-label", "View Details for " + restaurant.name);
     li.append(more)
 
     return li
 }
-
 
 /**
  * Add markers for current restaurants to the map.
@@ -194,3 +192,4 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
 });
 }
+
